@@ -24,33 +24,51 @@ const randomArray = (length) => {
 
 //1st case: solve for largest 2 numbers in array
 
-const sumLargestTwo = (myArray) => {
+let ignoreArray = [];
+
+const findLargest = (myArray) => {
   let first = 0;
   let firstIndex = 0;
-  let second = 0;
-  if (myArray.length == 2) {return myArray[0]+myArray[1];} else if (myArray.length < 2) {return false;}
   for ( i = 0; i < myArray.length; i++ ) {
     if (myArray[i] >= first) {
       first = myArray[i];
       firstIndex = i;
-      };
     };
-  for ( i = 0; i < myArray.length; i++ ) {
-    if (i === firstIndex) {continue;}
-    if (myArray[i] >= second) {
-      second = myArray[i];
-      };
-    };
-  console.log('first: ', first);
-  console.log('second: ', second);
-  return first+second;
+  };
+  ignoreArray.push(firstIndex);
+  return [first,firstIndex];
 };
 
-let testArray = randomArray(makeRandomNumber(8)+2);
-console.log('test Array = ', testArray);
+const findNextLargest = (myArray, ignoreIndex) => {
+  let second = 0;
+  let secondIndex = 0;
+  for ( i = 0; i < myArray.length; i++ ) {
+    for ( j = 0; j < ignoreIndex.length; j++ ) {
+      if (((i === ignoreIndex[j]) || (i === ignoreIndex[j]-1)) || (i === ignoreIndex[j]+1))  {
+        continue;
+      };
+      if (myArray[i] >= second) {
+        second = myArray[i];
+        secondIndex = i;
+      };
+    };
+  };
+  ignoreArray.push(secondIndex);
+  return [second, secondIndex];
+};
 
-let summed = sumLargestTwo(testArray);
-console.log('summed = ', summed);
+//let testArray = randomArray(makeRandomNumber(7)+3);
+let testArray = [2, 4, 6, 2, 5];
+console.log('test Array = ', testArray);
+let biggest = findLargest(testArray);
+console.log('largest, index = ', biggest);
+
+let secondBiggest = findNextLargest(testArray,ignoreArray);
+console.log('second largest, index =', secondBiggest);
+
+console.log('ignoreArray =', ignoreArray)
+let thirdBiggest = findNextLargest(testArray,ignoreArray);
+console.log('third largest, index =', thirdBiggest);
 
 $(document).ready(function() {
   $('#output-section-1').text(1);
