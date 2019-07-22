@@ -22,53 +22,29 @@ const randomArray = (length) => {
   return output;
 }
 
-//1st case: solve for largest 2 numbers in array
-
-let ignoreArray = [];
-
 const findLargest = (myArray) => {
   let first = 0;
   let firstIndex = 0;
+  let indexArray = [];
   for ( i = 0; i < myArray.length; i++ ) {
-    if (myArray[i] >= first) {
+    indexArray.push(i);
+  };
+    console.log('made it', indexArray)
+  for ( i = 0; i <= myArray.length; i++ ) {
+    if (first <= myArray[i]) {
       first = myArray[i];
       firstIndex = i;
-    };
+    }
   };
-  ignoreArray.push(firstIndex);
-  return [first,firstIndex];
-};
-
-const findNextLargest = (myArray, ignoreIndex) => {
-  let second = 0;
-  let secondIndex = 0;
-  for ( i = 0; i < myArray.length; i++ ) {
-    for ( j = 0; j < ignoreIndex.length; j++ ) {
-      if (((i === ignoreIndex[j]) || (i === ignoreIndex[j]-1)) || (i === ignoreIndex[j]+1))  {
-        continue;
-      };
-      if (myArray[i] >= second) {
-        second = myArray[i];
-        secondIndex = i;
-      };
-    };
-  };
-  ignoreArray.push(secondIndex);
-  return [second, secondIndex];
+  indexArray.splice(firstIndex-1,3)
+  return [first,indexArray];
 };
 
 //let testArray = randomArray(makeRandomNumber(7)+3);
-let testArray = [2, 4, 6, 2, 5];
-console.log('test Array = ', testArray);
-let biggest = findLargest(testArray);
-console.log('largest, index = ', biggest);
-
-let secondBiggest = findNextLargest(testArray,ignoreArray);
-console.log('second largest, index =', secondBiggest);
-
-console.log('ignoreArray =', ignoreArray)
-let thirdBiggest = findNextLargest(testArray,ignoreArray);
-console.log('third largest, index =', thirdBiggest);
+let testArray = [2,4,6,2,5];
+console.log('testArray = ',testArray)
+let largest = findLargest(testArray);
+console.log('largest = ',largest)
 
 $(document).ready(function() {
   $('#output-section-1').text(1);
