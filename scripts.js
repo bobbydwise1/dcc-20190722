@@ -6,23 +6,22 @@ This problem was asked by Apple.
 Implement a job scheduler which takes in a function f and an integer n, and calls f after n milliseconds.
 */
 
-//No GUI is assummed.
-
 const randomFunction = () => {
-  console.log('done')
-  //return -1*someValue;
+  console.log('button clicked')
+  return true;
 }
 
-let value = 0;
-let n = 5000;
-
-const jobQueue = (value) => {
-  setTimeout(randomFunction(value), n);
-  console.log('value =',value)
-  return value;
+const jobSched = (f, n) => {
+  setTimeout(f, n); //f is your funciton, n is time in milliseconds
 }
 
 $(document).ready(function() {
-  $('#output-section-1').text(value);
-  $('#output-section-2').text(2);
+  let timeElapsed = 0;
+  $('#button1').click(function() {
+    event.preventDefault();
+    let n = 5000;
+    jobSched(randomFunction, n);
+    $('#output-section-1').text('START');
+    setTimeout(function() {$('#output-section-2').text('END');}, n );
+  })
   });
